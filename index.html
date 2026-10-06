@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Who I Am? | Ei Ei Theint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@600;700;800&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+/* =========================================================
+   1. COLORS & FONTS  (change these to restyle everything)
+   ========================================================= */
+:root {
+  --bg: #f5f7fa;           /* page background */
+  --surface: #ffffff;      /* cards */
+  --ink: #14213d;          /* main text + dark navy */
+  --muted: #55627a;        /* secondary text */
+  --line: #dde3ec;         /* borders */
+  --accent: #0e7c86;       /* teal: security + growth */
+  --accent-soft: #e0f1f2;  /* light teal for tags */
+  --navy-soft: #e8ecf5;
+
+  --font-heading: "Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --font-body: "Figtree", "Segoe UI", system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0f1726;
+    --surface: #17223a;
+    --ink: #eaf0fa;
+    --muted: #9fb0cc;
+    --line: #2a3857;
+    --accent: #4cc3cc;
+    --accent-soft: #163b49;
+    --navy-soft: #1f2d4a;
+  }
+}
+
+/* =========================================================
+   2. BASE
+   ========================================================= */
+* { box-sizing: border-box; margin: 0; }
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg);
+  color: var(--ink);
+  line-height: 1.65;
+}
+
+h1, h2, h3 { font-family: var(--font-heading); line-height: 1.15; }
+
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+/* =========================================================
+   3. SECTION LAYOUT
+   ========================================================= */
+.about {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 96px 24px;
+}
+
+.about h2 {
+  font-size: clamp(3rem, 8vw, 5.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  margin-bottom: 48px;
+}
+
+/* Intro text on the left, profile card on the right */
+.about__top {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+.about__intro p {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: 62ch;
+  margin-bottom: 18px;
+}
+
+.about__intro p:first-child {
+  font-size: 1.35rem;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+/* =========================================================
+   4. PROFILE CARD
+   ========================================================= */
+.profile {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: 0 12px 32px rgba(20, 33, 61, 0.08);
+}
+
+.profile__head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+
+/* Replace the initials with a photo: <img src="you.jpg" alt="Ei Ei Theint"> */
+.profile__avatar {
+  flex: none;
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  display: grid;
+  place-items: center;
+  background: var(--ink);
+  color: var(--bg);
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 1.4rem;
+}
+
+.profile h3 { font-size: 1.35rem; }
+.profile__role { color: var(--muted); font-size: 0.95rem; }
+
+.profile__list { list-style: none; padding: 0; margin-top: 20px; display: grid; gap: 16px; }
+
+.profile__list li { padding-left: 16px; border-left: 3px solid var(--line); }
+.profile__list li.is-current { border-left-color: var(--accent); }
+
+.profile__list strong { display: block; font-size: 0.98rem; line-height: 1.4; }
+.profile__list span { font-size: 0.88rem; color: var(--muted); }
+
+.profile__interests { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); }
+.profile__interests p { font-size: 0.9rem; color: var(--muted); margin-bottom: 10px; }
+
+/* =========================================================
+   5. TAGS (used in profile card and skills)
+   ========================================================= */
+.tags { list-style: none; padding: 0; display: flex; flex-wrap: wrap; gap: 8px; }
+
+.tag {
+  background: var(--accent-soft);
+  color: var(--ink);
+  border: 1px solid transparent;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  transition: border-color 0.2s ease;
+}
+.tag:hover { border-color: var(--accent); }
+
+/* =========================================================
+   6. SKILLS
+   ========================================================= */
+.block { margin-top: 80px; }
+
+.block__title { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: 8px; }
+.block__lead { color: var(--muted); max-width: 62ch; margin-bottom: 28px; }
+
+.skills { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; }
+
+.skill-group {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  padding: 22px;
+}
+.skill-group h4 { font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 14px; }
+
+/* =========================================================
+   7. CURRENTLY LEARNING
+   ========================================================= */
+.learning {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.learning__item {
+  background: var(--navy-soft);
+  border-radius: 16px;
+  padding: 22px;
+}
+.learning__item h4 { font-family: var(--font-heading); font-size: 1.05rem; margin-bottom: 6px; }
+.learning__item p { font-size: 0.95rem; color: var(--muted); }
+
+/* =========================================================
+   8. MY DIRECTION  (a 4-step growth journey)
+   ========================================================= */
+.direction {
+  --dir-navy: #14213d;        /* always dark navy, in light and dark mode */
+  background: var(--dir-navy);
+  color: #eaf0fa;
+  border-radius: 24px;
+  padding: clamp(28px, 5vw, 56px);
+}
+.direction .block__title { color: #fff; }
+.direction .block__lead { color: #b6c3dc; margin-bottom: 44px; }
+
+/* Desktop: four stages in a row, joined by a thin line */
+.path {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.path li {
+  position: relative;
+  padding-top: 68px;          /* space for the number circle */
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+
+/* The numbered circle: 01, 02, 03, 04 */
+.path__num {
+  position: absolute;
+  top: 0; left: 0;
+  z-index: 1;
+  width: 44px; height: 44px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: var(--dir-navy);
+  border: 2px solid #4cc3cc;
+  color: #fff;
+  font-family: var(--font-heading);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+/* Stage 1 is filled in: it's where I am now */
+.path li:first-child .path__num {
+  background: #4cc3cc;
+  color: var(--dir-navy);
+  box-shadow: 0 0 0 5px rgba(76, 195, 204, 0.2);
+}
+.path__now {
+  display: inline-block;
+  margin-bottom: 8px;
+  padding: 2px 10px;
+  border: 1px solid rgba(76, 195, 204, 0.55);
+  border-radius: 999px;
+  color: #4cc3cc;
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+/* The connecting line (from this circle toward the next one) */
+.path li:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 21px;
+  left: 56px;
+  right: -16px;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.25);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.8s ease 0.3s;
+}
+
+.path h4 { font-family: var(--font-heading); font-size: 1.1rem; color: #fff; margin-bottom: 6px; }
+.path p { font-size: 0.95rem; color: #b6c3dc; }
+
+/* When the section scrolls into view: stages fade in one by one, lines draw */
+.reveal.is-visible .path li { opacity: 1; }
+.reveal.is-visible .path li:not(:last-child)::after { transform: scale(1); }
+.path li:nth-child(2) { transition-delay: 0.15s; }
+.path li:nth-child(3) { transition-delay: 0.3s; }
+.path li:nth-child(4) { transition-delay: 0.45s; }
+
+/* =========================================================
+   9. SCROLL REVEAL (one simple fade, JS adds .is-visible)
+   ========================================================= */
+.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.6s ease, transform 0.6s ease; }
+.reveal.is-visible { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* =========================================================
+   10. RESPONSIVE
+   ========================================================= */
+@media (max-width: 900px) {
+  .about { padding: 72px 20px; }
+  .about__top { grid-template-columns: 1fr; gap: 36px; }
+  .block { margin-top: 64px; }
+}
+
+/* Mobile: the journey becomes a vertical timeline */
+@media (max-width: 720px) {
+  .path { grid-template-columns: 1fr; gap: 28px; }
+  .path li { padding: 4px 0 0 68px; }
+  .path p { font-size: 1rem; }
+
+  .path li:not(:last-child)::after {
+    top: 52px;
+    bottom: -24px;
+    left: 21px;
+    right: auto;
+    width: 2px;
+    height: auto;
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  .reveal.is-visible .path li:not(:last-child)::after { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .path li { opacity: 1; transition: none; }
+  .path li:not(:last-child)::after { transform: none; transition: none; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- =========================================================
+     WHO I AM? SECTION
+     Edit the text below. Each block is clearly commented.
+     ========================================================= -->
+<section class="about" id="about" aria-labelledby="about-title">
+
+  <h2 id="about-title" class="reveal">Who I Am?</h2>
+
+  <!-- Intro + profile card -->
+  <div class="about__top">
+
+    <div class="about__intro reveal">
+      <p>Hi, I'm Ei Ei Theint, a cybersecurity and IT student who enjoys finding out how things work and why they sometimes don't.</p>
+      <p>I'm studying the NCC Level 5 Diploma in Computing with Cyber Security, after completing the Level 4 Diploma in Computing. Alongside it, I'm taking a local Diploma in IT Service Technician at NiT Institute.</p>
+      <p>I like learning on my own, solving technical problems, and experimenting with technology. I'm still early in my journey, so this portfolio shows the process as well as the results: the labs, the mistakes, and the progress.</p>
+    </div>
+
+    <!-- Profile card -->
+    <aside class="profile reveal" aria-label="Profile summary">
+      <div class="profile__head">
+        <div class="profile__avatar" aria-hidden="true">EE</div>
+        <div>
+          <h3>Ei Ei Theint</h3>
+          <p class="profile__role">Cybersecurity &amp; IT Student</p>
+        </div>
+      </div>
+
+      <ul class="profile__list">
+        <li class="is-current">
+          <strong>NCC Level 5 Diploma in Computing with Cyber Security</strong>
+          <span>Currently studying</span>
+        </li>
+        <li class="is-current">
+          <strong>Diploma in IT Service Technician, NiT Institute</strong>
+          <span>Currently studying</span>
+        </li>
+        <li>
+          <strong>NCC Level 4 Diploma in Computing</strong>
+          <span>Completed, 2025–2026</span>
+        </li>
+      </ul>
+
+      <div class="profile__interests">
+        <p>Interested in</p>
+        <ul class="tags">
+          <li class="tag">Cybersecurity</li>
+          <li class="tag">Networking</li>
+          <li class="tag">IT Support</li>
+          <li class="tag">System Administration</li>
+          <li class="tag">Software Development</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+
+  <!-- Skills -->
+  <div class="block reveal">
+    <h3 class="block__title">Skills I'm developing</h3>
+    <p class="block__lead">These are things I'm building through study, practice, labs, and assignments. I'm still learning all of them.</p>
+
+    <div class="skills">
+      <div class="skill-group">
+        <h4>Security &amp; Networking</h4>
+        <ul class="tags">
+          <li class="tag">Cybersecurity Fundamentals</li>
+          <li class="tag">Basic Security Concepts</li>
+          <li class="tag">Computer Networking</li>
+          <li class="tag">Network Troubleshooting</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <h4>Systems &amp; Support</h4>
+        <ul class="tags">
+          <li class="tag">IT Support</li>
+          <li class="tag">Windows</li>
+          <li class="tag">Linux</li>
+          <li class="tag">Virtual Machines</li>
+        </ul>
+      </div>
+
+      <div class="skill-group">
+        <h4>Programming &amp; Tools</h4>
+        <ul class="tags">
+          <li class="tag">Java</li>
+          <li class="tag">C#</li>
+          <li class="tag">HTML / CSS / JavaScript</li>
+          <li class="tag">Database Fundamentals</li>
+          <li class="tag">Git &amp; GitHub</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Currently learning -->
+  <div class="block reveal">
+    <h3 class="block__title">Currently learning</h3>
+    <p class="block__lead">Here's how I'm building my skills right now.</p>
+
+    <div class="learning">
+      <div class="learning__item">
+        <h4>Studying the fundamentals</h4>
+        <p>Working through networking, security, and computing concepts in my diploma courses.</p>
+      </div>
+      <div class="learning__item">
+        <h4>Practicing in labs</h4>
+        <p>Using virtual machines to try things safely, break them, and fix them.</p>
+      </div>
+      <div class="learning__item">
+        <h4>Writing code</h4>
+        <p>Improving my Java, C#, and web skills through assignments and small projects.</p>
+      </div>
+      <div class="learning__item">
+        <h4>Solving problems</h4>
+        <p>Troubleshooting technical issues and writing down what I learn each time.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- My direction -->
+  <div class="block reveal">
+    <div class="direction">
+      <h3 class="block__title">My Direction</h3>
+      <p class="block__lead">I'm building my foundation in IT and cybersecurity through study, hands-on practice, projects, and real-world experience. My goal is to keep learning, explore different areas of technology, and gradually find where I can make the greatest impact.</p>
+
+      <ol class="path">
+        <li aria-current="step">
+          <span class="path__num" aria-hidden="true">01</span>
+          <span class="path__now">Current starting point</span>
+          <h4>Build My Foundation</h4>
+          <p>Networking, IT Support, Linux, Programming, Computer Systems, and Cybersecurity fundamentals.</p>
+        </li>
+        <li>
+          <span class="path__num" aria-hidden="true">02</span>
+          <h4>Gain Real Experience</h4>
+          <p>Internships, practical labs, troubleshooting, projects, GitHub, and real-world IT tasks.</p>
+        </li>
+        <li>
+          <span class="path__num" aria-hidden="true">03</span>
+          <h4>Find My Specialization</h4>
+          <p>Explore Cybersecurity, Networking, System Administration, and Security Operations to discover the area where I want to build deeper expertise.</p>
+        </li>
+        <li>
+          <span class="path__num" aria-hidden="true">04</span>
+          <h4>Keep Growing</h4>
+          <p>Build advanced technical skills, complete certifications, work on meaningful projects, and continue learning throughout my career.</p>
+        </li>
+      </ol>
+    </div>
+  </div>
+
+</section>
+
+<!-- =========================================================
+     JAVASCRIPT: only used to fade items in as you scroll.
+     If you remove it, add class "is-visible" to .reveal items
+     or delete the .reveal styles, and everything still shows.
+     ========================================================= -->
+<script>
+  const items = document.querySelectorAll(".reveal");
+
+  if ("IntersectionObserver" in window) {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target); // animate only once
+        }
+      });
+    }, { threshold: 0.15 });
+
+    items.forEach((item) => observer.observe(item));
+  } else {
+    items.forEach((item) => item.classList.add("is-visible"));
+  }
+</script>
+
+</body>
+</html>
